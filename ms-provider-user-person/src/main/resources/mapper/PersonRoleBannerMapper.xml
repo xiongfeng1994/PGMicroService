@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebest.cloud.mapper.PersonRoleBannerMapper">
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.PersonRoleBanner">
+    <id column="banner_code" jdbcType="VARCHAR" property="bannerCode" />
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="rec_user_code" jdbcType="VARCHAR" property="recUserCode" />
+    <result column="rec_time_stamp" jdbcType="TIMESTAMP" property="recTimeStamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    banner_code, role_id, rec_user_code, rec_time_stamp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.ebest.cloud.entity.PersonRoleBannerKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person_role_banner
+    where banner_code = #{bannerCode,jdbcType=VARCHAR}
+      and role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ebest.cloud.entity.PersonRoleBannerKey">
+    delete from person_role_banner
+    where banner_code = #{bannerCode,jdbcType=VARCHAR}
+      and role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ebest.cloud.entity.PersonRoleBanner">
+    insert into person_role_banner (banner_code, role_id, rec_user_code, 
+      rec_time_stamp)
+    values (#{bannerCode,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{recUserCode,jdbcType=VARCHAR}, 
+      #{recTimeStamp,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ebest.cloud.entity.PersonRoleBanner">
+    insert into person_role_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bannerCode != null">
+        banner_code,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code,
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bannerCode != null">
+        #{bannerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="recUserCode != null">
+        #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ebest.cloud.entity.PersonRoleBanner">
+    update person_role_banner
+    <set>
+      <if test="recUserCode != null">
+        rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where banner_code = #{bannerCode,jdbcType=VARCHAR}
+      and role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ebest.cloud.entity.PersonRoleBanner">
+    update person_role_banner
+    set rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP}
+    where banner_code = #{bannerCode,jdbcType=VARCHAR}
+      and role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  		select count(*) from person_role_banner 
+  		where banner_code = #{bannerCode,jdbcType=VARCHAR}
+  		and and role_id = #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>

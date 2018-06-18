@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebest.cloud.mapper.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.Organization">
+    <id column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="parent_org_code" jdbcType="VARCHAR" property="parentOrgCode" />
+    <result column="org_type" jdbcType="VARCHAR" property="orgType" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="rec_user_code" jdbcType="VARCHAR" property="recUserCode" />
+    <result column="rec_time_stamp" jdbcType="TIMESTAMP" property="recTimeStamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    org_code, parent_org_code, org_type, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from organization
+    where org_code = #{orgCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from organization
+    where org_code = #{orgCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ebest.cloud.entity.Organization">
+    insert into organization (org_code, parent_org_code, org_type, 
+      is_deleted, rec_user_code, rec_time_stamp
+      )
+    values (#{orgCode,jdbcType=VARCHAR}, #{parentOrgCode,jdbcType=VARCHAR}, #{orgType,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{recUserCode,jdbcType=VARCHAR}, #{recTimeStamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ebest.cloud.entity.Organization">
+    insert into organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="parentOrgCode != null">
+        parent_org_code,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code,
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentOrgCode != null">
+        #{parentOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="recUserCode != null">
+        #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ebest.cloud.entity.Organization">
+    update organization
+    <set>
+      <if test="parentOrgCode != null">
+        parent_org_code = #{parentOrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where org_code = #{orgCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ebest.cloud.entity.Organization">
+    update organization
+    set parent_org_code = #{parentOrgCode,jdbcType=VARCHAR},
+      org_type = #{orgType,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP}
+    where org_code = #{orgCode,jdbcType=VARCHAR}
+  </update>
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  		select count(*) from organization where org_code = #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>

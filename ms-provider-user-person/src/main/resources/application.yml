@@ -1,0 +1,26 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+#datasource
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.2.117:3306/PGMaster?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8
+    username: pg
+    password: sharepoint@admin
+#service name
+  application:
+    name: ms-provider-user-person
+
+#server
+server:
+  port: 8763
+
+
+#mybatis
+mybatis:
+  mapper-locations:
+  - classpath:mapper/*.xml
+#  type-aliases-package: com.ebest.cloud.entity

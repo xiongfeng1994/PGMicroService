@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebest.cloud.mapper.PersonRoleMapper">
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.PersonRole">
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="person_code" jdbcType="VARCHAR" property="personCode" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="role_type" jdbcType="VARCHAR" property="roleType" />
+    <result column="rec_user_code" jdbcType="VARCHAR" property="recUserCode" />
+    <result column="rec_time_stamp" jdbcType="TIMESTAMP" property="recTimeStamp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, person_code, org_code, role_type, rec_user_code, rec_time_stamp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from person_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ebest.cloud.entity.PersonRole">
+    insert into person_role (role_id, person_code, org_code, 
+      role_type, rec_user_code, rec_time_stamp
+      )
+    values (#{roleId,jdbcType=VARCHAR}, #{personCode,jdbcType=VARCHAR}, #{orgCode,jdbcType=VARCHAR}, 
+      #{roleType,jdbcType=VARCHAR}, #{recUserCode,jdbcType=VARCHAR}, #{recTimeStamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ebest.cloud.entity.PersonRole">
+    insert into person_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="personCode != null">
+        person_code,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="roleType != null">
+        role_type,
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code,
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="personCode != null">
+        #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null">
+        #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="recUserCode != null">
+        #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ebest.cloud.entity.PersonRole">
+    update person_role
+    <set>
+      <if test="personCode != null">
+        person_code = #{personCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null">
+        role_type = #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ebest.cloud.entity.PersonRole">
+    update person_role
+    set person_code = #{personCode,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      role_type = #{roleType,jdbcType=VARCHAR},
+      rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP}
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  		select count(*) from person_role where role_id = #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>

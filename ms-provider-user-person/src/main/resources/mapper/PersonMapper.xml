@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebest.cloud.mapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.Person">
+    <id column="code" jdbcType="VARCHAR" property="code" />
+    <result column="third_party_code" jdbcType="VARCHAR" property="thirdPartyCode" />
+    <result column="name_cn" jdbcType="VARCHAR" property="nameCn" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="person_type" jdbcType="VARCHAR" property="personType" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="entry_date" jdbcType="DATE" property="entryDate" />
+    <result column="leave_date" jdbcType="DATE" property="leaveDate" />
+    <result column="line_manager" jdbcType="VARCHAR" property="lineManager" />
+    <result column="data_source" jdbcType="VARCHAR" property="dataSource" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="rec_user_code" jdbcType="VARCHAR" property="recUserCode" />
+    <result column="rec_time_stamp" jdbcType="TIMESTAMP" property="recTimeStamp" />
+  </resultMap>
+  
+  <!-- <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.Person">
+  	<id column="person_code" jdbcType="VARCHAR" property="code"/>
+  	<association column="line_manager_code" property="personPrent" select="selectDetailByLineManger"></association>
+  </resultMap> -->
+  
+  
+  <sql id="Base_Column_List">
+    code, third_party_code, name_cn, name_en, person_type, gender, mobile, email, entry_date, 
+    leave_date, line_manager, data_source, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- <sql id="Collection_Column_List" >
+    person.code person_code, 
+    person.line_manager line_manager_code,
+  </sql> 
+  
+  <select id="selectDetailByLineManger" resultMap="CollectionResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Collection_Column_List" />
+    from person person
+    where line_manager = #{lineManager,jdbcType=VARCHAR} and is_deleted = 0
+  </select> -->
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from person
+    where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from person
+    where code = #{code,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ebest.cloud.entity.Person">
+    insert into person (code, third_party_code, name_cn, 
+      name_en, person_type, gender, 
+      mobile, email, entry_date, 
+      leave_date, line_manager, data_source, 
+      is_deleted, rec_user_code, rec_time_stamp
+      )
+    values (#{code,jdbcType=VARCHAR}, #{thirdPartyCode,jdbcType=VARCHAR}, #{nameCn,jdbcType=VARCHAR}, 
+      #{nameEn,jdbcType=VARCHAR}, #{personType,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{entryDate,jdbcType=DATE}, 
+      #{leaveDate,jdbcType=DATE}, #{lineManager,jdbcType=VARCHAR}, #{dataSource,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=BIT}, #{recUserCode,jdbcType=VARCHAR}, #{recTimeStamp,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ebest.cloud.entity.Person">
+    insert into person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="thirdPartyCode != null">
+        third_party_code,
+      </if>
+      <if test="nameCn != null">
+        name_cn,
+      </if>
+      <if test="nameEn != null">
+        name_en,
+      </if>
+      <if test="personType != null">
+        person_type,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="entryDate != null">
+        entry_date,
+      </if>
+      <if test="leaveDate != null">
+        leave_date,
+      </if>
+      <if test="lineManager != null">
+        line_manager,
+      </if>
+      <if test="dataSource != null">
+        data_source,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code,
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdPartyCode != null">
+        #{thirdPartyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="nameCn != null">
+        #{nameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null">
+        #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null">
+        #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null">
+        #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="lineManager != null">
+        #{lineManager,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="recUserCode != null">
+        #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ebest.cloud.entity.Person">
+    update person
+    <set>
+      <if test="thirdPartyCode != null">
+        third_party_code = #{thirdPartyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="nameCn != null">
+        name_cn = #{nameCn,jdbcType=VARCHAR},
+      </if>
+      <if test="nameEn != null">
+        name_en = #{nameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="personType != null">
+        person_type = #{personType,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        entry_date = #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null">
+        leave_date = #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="lineManager != null">
+        line_manager = #{lineManager,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSource != null">
+        data_source = #{dataSource,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="recUserCode != null">
+        rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recTimeStamp != null">
+        rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ebest.cloud.entity.Person">
+    update person
+    set third_party_code = #{thirdPartyCode,jdbcType=VARCHAR},
+      name_cn = #{nameCn,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
+      person_type = #{personType,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      entry_date = #{entryDate,jdbcType=DATE},
+      leave_date = #{leaveDate,jdbcType=DATE},
+      line_manager = #{lineManager,jdbcType=VARCHAR},
+      data_source = #{dataSource,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+      rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP}
+    where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="updateIsDeleted" parameterType="com.ebest.cloud.entity.Person">
+    update person
+    set is_deleted = 1
+    where code = #{code,jdbcType=VARCHAR} and leave_date = #{leaveDate,jdbcType=DATE}
+  </update>
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  		select count(*) from person where code = #{code,jdbcType=VARCHAR}
+  </select>
+</mapper>
