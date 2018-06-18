@@ -1,0 +1,21 @@
+eureka:
+  instance:
+    hostname: localhost  
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8769
+spring:
+  application:
+    name: ms-zuul-apigateway
+zuul:
+  routes:
+    auth-center:
+      path: /login
+      service-id: ms-auth-center 
+    store: 
+      path: /store # 映射到的路径
+      service-id: ms-provider-user-store # Eureka中的serviceId
+
