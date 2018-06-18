@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.ChannelMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.Channel" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- used for table query -->
+  <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.Channel" >
+    <id column="channel_code" property="code" jdbcType="VARCHAR" />
+    <result column="channel_description" property="description" jdbcType="VARCHAR" />
+  <!--   <result column="channel_is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="channel_rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="channel_rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" /> -->
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    code, description, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- used for table query -->
+  <sql id="Collection_Column_List" >
+    channel.code channel_code, 
+    channel.description channel_description
+   <!--  channel.is_deleted channel_is_deleted
+    channel.rec_user_code channel_rec_user_code,
+    channel.rec_time_stamp channel_rec_time_stamp -->
+  </sql>
+  
+  <!-- select count by primary key -->
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  	select count(*) from channel where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+ 
+</mapper>

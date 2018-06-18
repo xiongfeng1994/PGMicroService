@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>ms-provider-user-person-log</contextName>
+    
+    <!-- define parameters -->  
+    <property name="LOG_PATH" value="log" />
+    <property name="APPDIR" value="microserviceLog" />
+   
+    <!-- define the time format -->
+    <timestamp key="TIMESTAMP" datePattern="yyyy-MM-dd" />
+    
+    <!-- logstash -->
+    <!-- <appender name="api-logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+ 		<destination>${logstashserver}</destination>
+ 		<encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+ 		<keepAliveDuration>5 minutes</keepAliveDuration>
+ 	</appender>
+
+	<appender name="api-async"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="api-logstash" />
+		<queueSize>8192</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+	</appender> -->
+	
+	
+    
+    <!-- INFO -->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APPDIR}/${TIMESTAMP}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APPDIR}/%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder> 
+    </appender>
+    
+
+	<!-- DEBUG -->
+    <appender name="DEBUG" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger Line:%-3L - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+    </appender>
+    
+    <logger name="org.springframework" level="WARN" />
+    <logger name="org.hibernate" level="WARN" />
+	<!-- <logger name="cn.com.pg.sso.monitor.MonitorInterceptor"
+		level="INFO">
+		<appender-ref ref="api-async" />
+	</logger> -->
+	
+	
+    <root level="INFO">
+        <appender-ref ref="INFO" />
+    </root>
+    
+</configuration>

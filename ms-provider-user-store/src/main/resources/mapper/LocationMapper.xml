@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.LocationMapper" >
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.Location" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- used for table query -->
+  <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.Location" >
+    <id column="location_code" property="code" jdbcType="VARCHAR" />
+    <result column="location_description" property="description" jdbcType="VARCHAR" />
+    <result column="location_level" property="level" jdbcType="INTEGER" />
+    <!--  <result column="location_parent_code" property="parentCode" jdbcType="VARCHAR" /> 
+    <result column="location_is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="location_rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="location_rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />  -->
+    <association property="parentLocation" column="location_parent_code" select="selectDetailByPrimaryKey"></association>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    code, description, parent_code, level, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- used for table query -->
+  <sql id="Collection_Column_List" >
+    location.code location_code, 
+    location.description location_description, 
+    location.parent_code location_parent_code, 
+    location.level location_level
+    <!--  location.is_deleted location_is_deleted
+    location.rec_user_code location_rec_user_code, 
+    location.rec_time_stamp location_rec_time_stamp -->
+  </sql>
+  
+  <!-- select count by primary key -->
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  	select count(*) from location where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+  
+  <!-- select location by primary key -->
+  <select id="selectDetailByPrimaryKey" resultMap="CollectionResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Collection_Column_List" />
+    from location location
+    where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select> 
+  
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.RegionMapper" >
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.Region" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="region_type" property="regionType" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- used for table query -->
+  <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.Region" >
+    <id column="region_code" property="code" jdbcType="VARCHAR" />
+    <result column="region_description" property="description" jdbcType="VARCHAR" />
+    <!--  <result column="region_region_type" property="regionType" jdbcType="VARCHAR" /> 
+    <result column="region_is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="region_rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="region_rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" /> -->
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    code, description, region_type, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- used for table query -->
+  <sql id="Collection_Column_List" >
+    region.code region_code, 
+    region.description region_description
+    <!-- region.region_type region_region_type, 
+    region.is_deleted region_is_deleted,
+    region.rec_user_code region_rec_user_code, 
+    region.rec_time_stamp region_rec_time_stamp -->
+  </sql>
+  
+  <!-- select count by primary key -->
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  	select count(*) from region where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+  
+</mapper>

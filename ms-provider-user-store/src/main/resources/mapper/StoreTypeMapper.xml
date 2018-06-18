@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.StoreTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.StoreType" >
+    <id column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- used for table query -->
+  <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.StoreType" >
+    <id column="storeType_code" property="code" jdbcType="VARCHAR" />
+    <result column="storeType_description" property="description" jdbcType="VARCHAR" />
+    <!-- <result column="storeType_is_deleted" property="isDeleted" jdbcType="BIT" /> 
+    <result column="storeType_rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="storeType_rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" /> -->
+  </resultMap>
+  
+
+  <sql id="Base_Column_List" >
+    code, description, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- used for table query -->
+  <sql id="Collection_Column_List" >
+    storeType.code storeType_code, 
+    storeType.description storeType_description
+    <!-- storeType.is_deleted storeType_is_deleted,
+    storeType.rec_user_code storeType_rec_user_code, 
+    storeType.rec_time_stamp storeType_rec_time_stamp -->
+  </sql>
+  
+  <!-- select count by primary key -->
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  	select count(*) from store_type where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+ 
+</mapper>

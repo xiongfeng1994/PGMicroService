@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.StorePersonMapper" >
+  
+  <resultMap id="BaseResultMap" type="com.ebest.cloud.entity.StorePerson" >
+    <id column="store_code" property="storeCode" jdbcType="VARCHAR" />
+    <id column="person_code" property="personCode" jdbcType="VARCHAR" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <!-- used for table query -->
+  <resultMap id="CollectionResultMap" type="com.ebest.cloud.entity.StorePerson" >
+    <id column="storePerson_store_code" property="storeCode" jdbcType="VARCHAR" />
+    <id column="storePerson_person_code" property="personCode" jdbcType="VARCHAR" />
+    <!-- <result column="storePerson_is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="storePerson_rec_user_code" property="recUserCode" jdbcType="VARCHAR" />
+    <result column="storePerson_rec_time_stamp" property="recTimeStamp" jdbcType="TIMESTAMP" /> -->
+  </resultMap>
+  
+  <!-- used for table query -->
+  <sql id="Collection_Column_List" >
+    storePerson.store_code storePerson_store_code, 
+    storePerson.person_code storePerson_person_code
+    <!--  storePerson.is_deleted storePerson_is_deleted,
+    storePerson.rec_user_code storePerson_rec_user_code, 
+    storePerson.rec_time_stamp storePerson_rec_time_stamp -->
+  </sql>
+  
+  <sql id="Base_Column_List" >
+    store_code, person_code, is_deleted, rec_user_code, rec_time_stamp
+  </sql>
+  
+  <!-- select count by primary key -->
+  <select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  	select count(*) from store_person where code = #{code,jdbcType=VARCHAR} and is_deleted = 0
+  </select>
+   
+</mapper>

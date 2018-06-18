@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ebest.cloud.mapper.StoreMapper">
+	<resultMap id="BaseResultMap"
+		type="com.ebest.cloud.entity.Store">
+		<id column="code" property="code" jdbcType="VARCHAR" />
+		<result column="cdh_code" property="cdhCode" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="store_type_code" property="storeTypeCode"
+			jdbcType="VARCHAR" />
+		<result column="channel_code" property="channelCode"
+			jdbcType="VARCHAR" />
+		<result column="banner_code" property="bannerCode"
+			jdbcType="VARCHAR" />
+		<result column="region_code" property="regionCode"
+			jdbcType="VARCHAR" />
+		<result column="market_code" property="marketCode"
+			jdbcType="VARCHAR" />
+		<result column="location_code" property="locationCode"
+			jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude"
+			jdbcType="INTEGER" />
+		<result column="longitude" property="longitude"
+			jdbcType="INTEGER" />
+		<result column="store_owner_code" property="storeOwnerCode"
+			jdbcType="VARCHAR" />
+		<result column="open_date" property="openDate"
+			jdbcType="TIMESTAMP" />
+		<result column="close_date" property="closeDate"
+			jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+		<result column="rec_user_code" property="recUserCode"
+			jdbcType="VARCHAR" />
+		<result column="rec_time_stamp" property="recTimeStamp"
+			jdbcType="TIMESTAMP" />
+		<result column="store_tire" jdbcType="VARCHAR"
+			property="storeTire" />
+		<result column="visit_target" jdbcType="VARCHAR"
+			property="visitTarget" />
+		<result column="in_store_time" jdbcType="INTEGER"
+			property="inStoreTime" />
+	</resultMap>
+
+	<!-- used for table query -->
+	<resultMap id="CollectionResultMap"
+		type="com.ebest.cloud.entity.Store">
+		<id column="store_code" property="code" jdbcType="VARCHAR" />
+		<result column="store_cdh_code" property="cdhCode"
+			jdbcType="VARCHAR" />
+		<result column="store_name" property="name" jdbcType="VARCHAR" />
+		<result column="store_phone" property="phone"
+			jdbcType="VARCHAR" />
+		<result column="store_address" property="address"
+			jdbcType="VARCHAR" />
+		<result column="store_latitude" property="latitude"
+			jdbcType="INTEGER" />
+		<result column="store_longitude" property="longitude"
+			jdbcType="INTEGER" />
+		<result column="store_store_owner_code"
+			property="storeOwnerCode" jdbcType="VARCHAR" />
+		<result column="store_open_date" property="openDate"
+			jdbcType="TIMESTAMP" />
+		<result column="store_close_date" property="closeDate"
+			jdbcType="TIMESTAMP" />
+		<result column="store_status" property="status"
+			jdbcType="VARCHAR" />
+		<result column="store_store_tire" jdbcType="VARCHAR"
+			property="storeTire" />
+		<result column="store_visit_target" jdbcType="VARCHAR"
+			property="visitTarget" />
+		<result column="store_in_store_time" jdbcType="INTEGER"
+			property="inStoreTime" />
+		<!--<result column="store_is_deleted" property="isDeleted"
+			jdbcType="BIT" />
+		<result column="store_rec_user_code" property="recUserCode"
+			jdbcType="VARCHAR" />
+		<result column="store_rec_time_stamp" property="recTimeStamp"
+			jdbcType="TIMESTAMP" /> -->
+
+		<association property="banner"
+			resultMap="com.ebest.cloud.mapper.BannersMapper.CollectionResultMap"></association>
+		<association property="channel"
+			resultMap="com.ebest.cloud.mapper.ChannelMapper.CollectionResultMap"></association>
+		<association property="location"
+			resultMap="com.ebest.cloud.mapper.LocationMapper.CollectionResultMap"></association>
+		<association property="market"
+			resultMap="com.ebest.cloud.mapper.MarketMapper.CollectionResultMap"></association>
+		<association property="region"
+			resultMap="com.ebest.cloud.mapper.RegionMapper.CollectionResultMap"></association>
+		<association property="storeType"
+			resultMap="com.ebest.cloud.mapper.StoreTypeMapper.CollectionResultMap"></association>
+
+	</resultMap>
+	
+	<sql id="Collection_SqlConditions_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		code, cdh_code, name, phone, address, store_type_code, channel_code,
+		banner_code,
+		region_code, market_code, location_code, latitude, longitude, store_owner_code,
+		store_tire,
+		visit_target, in_store_time, open_date, close_date, status, is_deleted,
+		rec_user_code,
+		rec_time_stamp
+	</sql>
+	
+	<!-- used for table query -->
+	<sql id="Collection_Column_List">
+		store.code store_code,
+		store.cdh_code store_cdh_code,
+		store.name store_name,
+		store.phone store_phone,
+		store.address store_address,
+		store.store_type_code store_store_type_code,
+		store.channel_code store_channel_code,
+		store.banner_code store_banner_code,
+		store.region_code store_region_code,
+		store.market_code store_market_code,
+		store.location_code store_location_code,
+		store.latitude store_latitude,
+		store.longitude store_longitude,
+		store.store_owner_code store_store_owner_code,
+		store.open_date store_open_date,
+		store.close_date store_close_date,
+		store.status store_status,
+		store.store_tire store_store_tire,
+		store.visit_target store_visit_target,
+		store.in_store_time store_in_store_time 
+		<!-- store.is_deleted store_is_deleted,
+		store.rec_user_code store_rec_user_code,
+		store.rec_time_stamp store_rec_time_stamp, -->
+	</sql>
+	
+	<!-- select count by primary key -->
+	<select id="selectCountByPrimaryKey" resultType="java.lang.Integer" parameterType="java.lang.String"	>
+  		select count(*) from store 
+  		where code = #{code,jdbcType=VARCHAR}
+  		<if test="isDeleted != null">
+			and is_deleted = #{isDeleted,jdbcType=BIT}
+		</if>
+  	</select>
+  	
+	<!-- select store detail by sql conditions -->
+	<select id="selectDetailStoresBySqlConditions" resultMap="CollectionResultMap" parameterType="com.ebest.cloud.entity.sqlconditions.DetailStoreSQLConditions">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.BannersMapper.Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.ChannelMapper.Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.LocationMapper.Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.MarketMapper.Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.RegionMapper.Collection_Column_List"></include>
+		,
+		<include
+			refid="com.ebest.cloud.mapper.StoreTypeMapper.Collection_Column_List"></include>
+		from store store
+		left join banners banner on store.banner_code = banner.code and banner.is_deleted = 0
+		left join channel channel on store.channel_code = channel.code and channel.is_deleted = 0
+		left join location location on store.location_code = location.code and location.is_deleted = 0
+		left join market market on store.market_code = market.code and market.is_deleted = 0 
+		left join region region on store.region_code = region.code and region.is_deleted = 0
+		left join store_type storeType on store.store_type_code = storeType.code and storeType.is_deleted = 0
+		<if test="_parameter != null">
+			<include refid="Collection_SqlConditions_Where_Clause" />	
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- select store by primary key -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from store
+		where code = #{code,jdbcType=VARCHAR} 	
+	</select>
+	
+	<!-- insert store -->
+	<insert id="insert" parameterType="com.ebest.cloud.entity.Store">
+		insert into store (code, cdh_code, name,
+		phone, address, store_type_code,
+		channel_code, banner_code, region_code,
+		market_code, location_code, latitude,
+		longitude, store_owner_code, store_tire,
+		visit_target, in_store_time, open_date,
+		close_date, status, is_deleted,
+		rec_user_code, rec_time_stamp)
+		values (#{code,jdbcType=VARCHAR}, #{cdhCode,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{storeTypeCode,jdbcType=VARCHAR},
+		#{channelCode,jdbcType=VARCHAR}, #{bannerCode,jdbcType=VARCHAR},
+		#{regionCode,jdbcType=VARCHAR},
+		#{marketCode,jdbcType=VARCHAR}, #{locationCode,jdbcType=VARCHAR}, #{latitude,jdbcType=INTEGER},
+		#{longitude,jdbcType=INTEGER}, #{storeOwnerCode,jdbcType=VARCHAR},
+		#{storeTire,jdbcType=VARCHAR},
+		#{visitTarget,jdbcType=VARCHAR}, #{inStoreTime,jdbcType=INTEGER}, #{openDate,jdbcType=TIMESTAMP},
+		#{closeDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR},
+		#{isDeleted,jdbcType=BIT},
+		#{recUserCode,jdbcType=VARCHAR}, #{recTimeStamp,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<!-- update store by primary key selective-->
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.ebest.cloud.entity.Store">
+		update store
+		<set>
+			<if test="cdhCode != null">
+				cdh_code = #{cdhCode,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="storeTypeCode != null">
+				store_type_code = #{storeTypeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="channelCode != null">
+				channel_code = #{channelCode,jdbcType=VARCHAR},
+			</if>
+			<if test="bannerCode != null">
+				banner_code = #{bannerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="regionCode != null">
+				region_code = #{regionCode,jdbcType=VARCHAR},
+			</if>
+			<if test="marketCode != null">
+				market_code = #{marketCode,jdbcType=VARCHAR},
+			</if>
+			<if test="locationCode != null">
+				location_code = #{locationCode,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=INTEGER},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=INTEGER},
+			</if>
+			<if test="storeOwnerCode != null">
+				store_owner_code = #{storeOwnerCode,jdbcType=VARCHAR},
+			</if>
+			<if test="storeTire != null">
+				store_tire = #{storeTire,jdbcType=VARCHAR},
+			</if>
+			<if test="visitTarget != null">
+				visit_target = #{visitTarget,jdbcType=VARCHAR},
+			</if>
+			<if test="inStoreTime != null">
+				in_store_time = #{inStoreTime,jdbcType=INTEGER},
+			</if>
+			<if test="openDate != null">
+				open_date = #{openDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="closeDate != null">
+				close_date = #{closeDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=BIT},
+			</if>
+			<if test="recUserCode != null">
+				rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+			</if>
+			<if test="recTimeStamp != null">
+				rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where code = #{code,jdbcType=VARCHAR}
+	</update>
+
+	<!-- update store by primary key -->
+	<update id="updateByPrimaryKey"
+		parameterType="com.ebest.cloud.entity.Store">
+		update store
+		set cdh_code = #{cdhCode,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		store_type_code = #{storeTypeCode,jdbcType=VARCHAR},
+		channel_code = #{channelCode,jdbcType=VARCHAR},
+		banner_code = #{bannerCode,jdbcType=VARCHAR},
+		region_code = #{regionCode,jdbcType=VARCHAR},
+		market_code = #{marketCode,jdbcType=VARCHAR},
+		location_code = #{locationCode,jdbcType=VARCHAR},
+		latitude = #{latitude,jdbcType=INTEGER},
+		longitude = #{longitude,jdbcType=INTEGER},
+		store_owner_code = #{storeOwnerCode,jdbcType=VARCHAR},
+		store_tire = #{storeTire,jdbcType=VARCHAR},
+		visit_target = #{visitTarget,jdbcType=VARCHAR},
+		in_store_time = #{inStoreTime,jdbcType=INTEGER},
+		open_date = #{openDate,jdbcType=TIMESTAMP},
+		close_date = #{closeDate,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=VARCHAR},
+		is_deleted = #{isDeleted,jdbcType=BIT},
+		rec_user_code = #{recUserCode,jdbcType=VARCHAR},
+		rec_time_stamp = #{recTimeStamp,jdbcType=TIMESTAMP}
+		where code = #{code,jdbcType=VARCHAR}
+	</update>
+</mapper>
