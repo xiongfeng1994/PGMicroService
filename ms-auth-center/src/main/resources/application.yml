@@ -1,0 +1,19 @@
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+server:
+  port: 8081
+spring:
+  application:
+    name: ms-auth-center
+  cloud:
+    config:
+      fail-fast: true
+      username: chenxj
+      password: chenxj
+      discovery:
+        enabled: true
+        service-id: config
